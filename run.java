@@ -9,21 +9,23 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-
 class Surface extends JPanel {
     public scene gameScene;
 
     public Surface(){
-        gameScene = new scene(); // init scene
+        gameScene = new scene();
     }
-    protected void paintComponent(Graphics g){ 
-        super.paintComponent(g);
+    
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
         gameScene.draw(g); // draw scene
     }
 }
 
 public class run{
-    static int frameDelay = 100;
+    static int deltaTime = 17;
 
     public static void main(String[] args){
         SwingUtilities.invokeLater(() -> {
@@ -33,13 +35,13 @@ public class run{
             Surface surface = new Surface();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.add(surface);
-            frame.setSize(25*25, 25*25);
+            frame.setSize(625, 625);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.addKeyListener(surface.gameScene);
 
             // update scene
-            Timer timer = new Timer(frameDelay, new ActionListener() {
+            Timer timer = new Timer(deltaTime, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e){
                     surface.gameScene.update();

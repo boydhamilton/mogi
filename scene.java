@@ -7,8 +7,6 @@ import ecs.*;
 import components.*;
 import systems.*;
 
-// really just whipped this up to test everything, it is beyond jank lol
-
 public class scene extends JFrame implements KeyListener{
 
     // to make input access global need to do key states
@@ -19,34 +17,25 @@ public class scene extends JFrame implements KeyListener{
     manager ECSmanager = new manager();
     renderSystem renderSystem = new renderSystem();
     colliderSystem colliderSystem = new colliderSystem();
-    physicsSystem physicsSystem = new physicsSystem();
 
-    // enities
-    entity[] entities = new entity[500]; // if you need more entities than that per scene you are doing too big a project lol. should half it tbh
-    entity box = new entity(0);
-    entity box2 = new entity(1);
-
+    entity plane = new entity(0);
+    entity square = new entity(1);
 
     // init
     public scene() {
+        plane.addComponent(new transformComponent(50, 50));
+        plane.addComponent(new renderComponent("plane.png"));
+        plane.addComponent(new colliderComponent(25, 25));
+        ECSmanager.addEntity(plane);
 
-        // box
-        box.addComponent(new transformComponent(10, 10));
-        box.addComponent(new renderComponent(10,10, Color.RED));
-        box.addComponent(new colliderComponent(10, 10));
-        box.addComponent(new physicsComponent(new float[] {0,0}, 1.6f, 1.8f, 5));
-        ECSmanager.addEntity(box);
-
-        // box2
-        box2.addComponent(new transformComponent(50, 15));
-        box2.addComponent(new renderComponent(10, 10, Color.BLUE));
-        box2.addComponent(new colliderComponent(10, 10));
-        ECSmanager.addEntity(box2);
+        square.addComponent(new transformComponent(100, 50));
+        square.addComponent(new renderComponent("plane.png"));
+        square.addComponent(new colliderComponent(25, 25));
+        ECSmanager.addEntity(square);
 
         // ecs
         ECSmanager.addSystem(renderSystem);
         ECSmanager.addSystem(colliderSystem);
-        ECSmanager.addSystem(physicsSystem);
 
         ECSmanager.init();
     }
@@ -54,50 +43,34 @@ public class scene extends JFrame implements KeyListener{
     // update
     public void update() {
 
-        // transformComponent t = box.getComponent(transformComponent.class);
-        physicsComponent p = box.getComponent(physicsComponent.class);
-
-        // need to resolve collision with respect to direction, maybe a collisionsystem thing?
+        transformComponent t=plane.getComponent(transformComponent.class);
         if(keyDown=='a'){
-            p.velocity[0] = -1;
+            t.x-=1;
         }else if(keyDown=='d'){
-            p.velocity[0] = 1;
+            t.x+=1;
+        }
+        if(keyDown=='w'){
+            t.y-=1;
         }else if(keyDown=='s'){
-           p.velocity[1] = 1;
-        }else if(keyDown=='w'){
-             p.velocity[1] = -1;
-        }
-        if(keyUp=='a' || keyUp=='d'){
-            p.velocity[0]=0;
-        }
-        if(keyUp=='w' || keyUp=='s'){
-            p.velocity[1]=0;
+            t.y+=1;
         }
 
-        
-        if(keyDown=='x'){
-            entity bullet = new entity(2);
-            entities[bullet.getID()] = bullet;
-            bullet.addComponent(new renderComponent(5, 5, java.awt.Color.black));
-            bullet.addComponent(new transformComponent(50, 100));
-            bullet.addComponent(new colliderComponent(5, 5));
-            ECSmanager.addEntity(bullet);
+        if(keyDown=='q'){
+            t.d+=0.5;
+        }else if(keyDown=='e'){
+            t.d-=0.5;
         }
-        if(entities[2]!=null){
-            if(colliderSystem.AABBisColliding(box, entities[2])){
-                p.velocity[0] = 5;
-            }
-        }
-        
 
         ECSmanager.update();
     }
 
     // draw
     public void draw(Graphics g) {
-
+        
         ECSmanager.draw(g);
     }
+
+
 
 
     // input

@@ -22,7 +22,7 @@ public class colliderSystem implements system{
     public void update(List<entity> entities) {
 
         // add screen segmentation (only check other entities in that quadrant)
-        // nvm i dont need this at all i just need to check a against b for my purposes
+        // do i need a iscolliding bool? probably
         
         IntStream.range(0,entities.size())
             .parallel()
@@ -32,6 +32,8 @@ public class colliderSystem implements system{
             if(e.hasComponent(colliderComponent.class) && e.hasComponent(transformComponent.class)){
                 colliderComponent a = e.getComponent(colliderComponent.class);
                 transformComponent at = e.getComponent(transformComponent.class);
+
+                // TODO: add collider offsets
 
                 IntStream.range(i+1,entities.size())
                     .parallel()
