@@ -56,10 +56,15 @@ public class scene extends JFrame implements KeyListener{
         }
 
         if(keyDown=='q'){
-            t.d+=0.5;
+            t.d-=Math.PI/6;
         }else if(keyDown=='e'){
-            t.d-=0.5;
+            t.d+=Math.PI/6;
         }
+        if(keyDown=='x'){
+            // shoot
+        }
+
+        colliderComponent c = square.getComponent(colliderComponent.class);
 
         ECSmanager.update();
     }
