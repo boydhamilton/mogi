@@ -47,9 +47,6 @@ public class colliderSystem implements system{
                             System.out.println(Integer.toString(e.id) + " collided with " + Integer.toString(eb.id) );
                             a.isColliding = true;
                             b.isColliding = true;
-                        }else{
-                            a.isColliding = false;
-                            b.isColliding = false;
                         }
                 });
             }

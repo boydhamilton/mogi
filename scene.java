@@ -17,6 +17,7 @@ public class scene extends JFrame implements KeyListener{
     manager ECSmanager = new manager();
     renderSystem renderSystem = new renderSystem();
     colliderSystem colliderSystem = new colliderSystem();
+    physicsSystem physicsSystem = new physicsSystem();
 
     entity plane = new entity(0);
     entity square = new entity(1);
@@ -36,6 +37,7 @@ public class scene extends JFrame implements KeyListener{
         // ecs
         ECSmanager.addSystem(renderSystem);
         ECSmanager.addSystem(colliderSystem);
+        ECSmanager.addSystem(physicsSystem);
 
         ECSmanager.init();
     }
@@ -56,15 +58,30 @@ public class scene extends JFrame implements KeyListener{
         }
 
         if(keyDown=='q'){
-            t.d-=Math.PI/6;
+            t.d+=0.5;
         }else if(keyDown=='e'){
-            t.d+=Math.PI/6;
-        }
-        if(keyDown=='x'){
-            // shoot
+            t.d-=0.5;
         }
 
-        colliderComponent c = square.getComponent(colliderComponent.class);
+        if(keyDown=='x'){
+            entity bullet = new entity(ECSmanager.entities.size());
+            transformComponent pt = plane.getComponent(transformComponent.class);
+            bullet.addComponent(new transformComponent((int)pt.x, (int)pt.y));
+            bullet.addComponent(new renderComponent("plane.png"));
+            bullet.addComponent(new colliderComponent(5, 5));
+
+            float vx = (float)Math.cos(pt.d - Math.PI/2);
+            float vy = (float)Math.sin(pt.d - Math.PI/2);
+
+            bullet.addComponent(new physicsComponent(new float[] {vx,vy}, 1, 1, 10));
+            ECSmanager.addEntity(bullet);
+            // to delete entity when offscreen (all custom entity behavior that can't be scene+system based): 
+            // create a new object extending entity and add+call update/draw methods as needed
+        }
+
+        if(square.getComponent(colliderComponent.class).isColliding){
+            ECSmanager.removeEntity(square);
+        }
 
         ECSmanager.update();
     }

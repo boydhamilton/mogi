@@ -14,10 +14,16 @@ public class manager {
         systems.remove(s);
     }
     public void addEntity(entity e){
-        entities.add(e);
+        entities.add(e.getID(), e); // position @ id, makes getentity easy
     }
     public void removeEntity(entity e){
         entities.remove(e);
+    }
+    public void removeEntity(int id){ // overload
+        entities.remove(id);
+    }
+    public entity getEntity(int id){
+        return entities.get(id);
     }
 
     public void init(){

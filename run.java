@@ -25,7 +25,7 @@ class Surface extends JPanel {
 }
 
 public class run{
-    static int deltaTime = 17; // 60fps
+    static int deltaTime = 17;
 
     public static void main(String[] args){
         SwingUtilities.invokeLater(() -> {

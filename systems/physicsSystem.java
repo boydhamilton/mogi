@@ -32,7 +32,7 @@ public class physicsSystem implements system{ // for velocity acceleration movem
                 t.x+=vx;
                 t.y+=vy;
             }
-        
+            
             // do acceleration pls
             /*
                 if(v < 1){
