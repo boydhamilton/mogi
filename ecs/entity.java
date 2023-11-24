@@ -3,16 +3,28 @@ import java.util.ArrayList;
 
 
 public class entity {
-    public int id; // maybe do string tags or something later?
+    public int id;
+    public String tag;
 
     public ArrayList<component> components = new ArrayList<>();
 
     public entity(int id){
         this.id = id;
+        this.tag = null;
+    }
+
+    // overload
+    public entity(int id, String tag){
+        this.id = id;
+        this.tag = tag;
     }
 
     public int getID(){
         return id;
+    }
+
+    public String getTag(){
+        return tag;
     }
 
     public void addComponent(component c){

@@ -12,6 +12,7 @@ public class renderComponent extends component{
 
     public String path;
 
+    // TODO: add zorder function and then parallelize
     public renderComponent(String imagePath){
 
         File file = new File(imagePath);

@@ -7,7 +7,10 @@ ROTATING Axis Aligned Bounding Boxes COLLISION BREAKDOWN
 - if intersection point is within the bounds of one of the rectangles, they are colliding 
 
 
+todo list
 
-keylistener only checks when keys go down/up, we need to keep track of button states ourselves if we want multiple at once
+changing scene to be a type so we can switch scenes, + it would be nice to nest keystates and such into a class instead of having all that grotesquely on display
 
-ez fix, format files to be consistent, noticed imports in systems files
+tags + tag collision
+- parallize getentity (tag) function, doesnt have to be slow. just add a check to make sure object hasnt been added before
+

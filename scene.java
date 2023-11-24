@@ -9,108 +9,100 @@ import systems.*;
 
 public class scene extends JFrame implements KeyListener{
 
-    // to make input access global need to do key states
-    public char keyDown;
-    public char keyUp;
-
     // ecs
-    manager ECSmanager = new manager();
+    manager world = new manager();
     renderSystem renderSystem = new renderSystem();
     colliderSystem colliderSystem = new colliderSystem();
     physicsSystem physicsSystem = new physicsSystem();
 
     entity plane = new entity(0);
-    entity square = new entity(1);
+    entity square = new entity(1, "square");
+
+    boolean[] keys = new boolean[100]; // arbitrary, check https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list if u want more
 
     // init
     public scene() {
         plane.addComponent(new transformComponent(50, 50));
         plane.addComponent(new renderComponent("plane.png"));
-        plane.addComponent(new colliderComponent(25, 25));
-        ECSmanager.addEntity(plane);
+        plane.addComponent(new colliderComponent(25, 25, 2, 1));
+        world.addEntity(plane);
 
         square.addComponent(new transformComponent(100, 50));
         square.addComponent(new renderComponent("plane.png"));
-        square.addComponent(new colliderComponent(25, 25));
-        ECSmanager.addEntity(square);
+        square.addComponent(new colliderComponent(25, 25, 2, 1));
+        world.addEntity(square);
 
         // ecs
-        ECSmanager.addSystem(renderSystem);
-        ECSmanager.addSystem(colliderSystem);
-        ECSmanager.addSystem(physicsSystem);
+        world.addSystem(renderSystem);
+        world.addSystem(colliderSystem);
+        world.addSystem(physicsSystem);
 
-        ECSmanager.init();
+        world.init();
     }
 
     // update
+    public int speed = 10;
     public void update() {
 
-        transformComponent t=plane.getComponent(transformComponent.class);
-        if(keyDown=='a'){
-            t.x-=1;
-        }else if(keyDown=='d'){
-            t.x+=1;
-        }
-        if(keyDown=='w'){
-            t.y-=1;
-        }else if(keyDown=='s'){
-            t.y+=1;
-        }
+        transformComponent t = plane.getComponent(transformComponent.class);
 
-        if(keyDown=='q'){
-            t.d+=0.5;
-        }else if(keyDown=='e'){
-            t.d-=0.5;
+        if(keys[87]){ // w and s are weird, tested with other buttons and it worked fine
+            t.y-=speed;
+        }else if(keys[83]){
+            t.y+=speed;
         }
-
-        if(keyDown=='x'){
-            entity bullet = new entity(ECSmanager.entities.size());
+        if(keys[65]){
+            t.x-=speed;
+        }else if(keys[68]){
+            t.x+=speed;
+        }
+        if(keys[81]){
+            t.d-=Math.PI/12;
+        }else if(keys[69]){
+            t.d+=Math.PI/12;
+        }
+        if(keys[88]){
+            entity bullet = new entity(world.entities.size(), "bullet");
             transformComponent pt = plane.getComponent(transformComponent.class);
             bullet.addComponent(new transformComponent((int)pt.x, (int)pt.y));
             bullet.addComponent(new renderComponent("plane.png"));
-            bullet.addComponent(new colliderComponent(5, 5));
+            bullet.addComponent(new colliderComponent(5, 5, 15, 15));
 
-            float vx = (float)Math.cos(pt.d - Math.PI/2);
-            float vy = (float)Math.sin(pt.d - Math.PI/2);
+            float vx = (float)Math.cos(pt.d - Math.PI/2) * 10;
+            float vy = (float)Math.sin(pt.d - Math.PI/2) * 10;
 
             bullet.addComponent(new physicsComponent(new float[] {vx,vy}, 1, 1, 10));
-            ECSmanager.addEntity(bullet);
-            // to delete entity when offscreen (all custom entity behavior that can't be scene+system based): 
-            // create a new object extending entity and add+call update/draw methods as needed
+            world.addEntity(bullet);
         }
 
-        if(square.getComponent(colliderComponent.class).isColliding){
-            ECSmanager.removeEntity(square);
+
+        if(colliderSystem.AABBisColliding(square.tag, "bullet", world)){
+            world.removeEntity(square);
         }
 
-        ECSmanager.update();
+        world.update();
     }
 
     // draw
     public void draw(Graphics g) {
         
-        ECSmanager.draw(g);
+        world.draw(g);
     }
-
-
 
 
     // input
     @Override
     public void keyPressed(KeyEvent e) {
-        keyDown = e.getKeyChar();
-
-        if(keyDown == keyUp){
-            keyUp = '|';
+        if(!keys[e.getKeyCode()]){
+            keys[e.getKeyCode()] = true;
+            System.out.println(e.getKeyCode() + " " + (char)e.getKeyCode());
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        keyUp = e.getKeyChar();
-
-        if(keyUp == keyDown){
-            keyDown = '|';
+        if(keys[e.getKeyCode()]){
+            keys[e.getKeyCode()] = false;
         }
     }
 

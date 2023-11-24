@@ -13,7 +13,7 @@ public class transformComponent extends component{
         this.d = d;
     }
 
-    public transformComponent(int x, int y){ // method overload, dont want to force rotation of the populace
+    public transformComponent(int x, int y){ // method overload, dont want to force rotation on the populace
         this.x = x;
         this.y = y;
         this.d = 0.0f;

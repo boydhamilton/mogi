@@ -1,14 +1,13 @@
 package systems;
 
-import java.util.List;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
-import components.*;
-import ecs.*;
-
+import java.util.List;
 import java.io.*;
 import javax.imageio.ImageIO;
+
+import ecs.*;
+import components.*;
 
 public class renderSystem implements system{
     
@@ -28,7 +27,6 @@ public class renderSystem implements system{
         
         for(entity e : entities){
             if(e.hasComponent(transformComponent.class) && e.hasComponent(renderComponent.class)){
-
                 Graphics2D g2d = (Graphics2D) g;
 
                 transformComponent t = e.getComponent(transformComponent.class);

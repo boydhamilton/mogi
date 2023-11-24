@@ -1,17 +1,16 @@
 package systems;
 
-// frame
 import java.awt.Graphics;
-
+import java.awt.Graphics2D;
 import java.util.*;
-import java.util.stream.IntStream; // parallization
+import java.util.stream.IntStream;
 
 import ecs.*;
-import components.colliderComponent;
-import components.transformComponent;
+import components.*;
 
 public class colliderSystem implements system{
     
+    boolean debugDrawColliders = true;
 
     @Override
     public void init(List<entity> entities) {
@@ -22,7 +21,6 @@ public class colliderSystem implements system{
     public void update(List<entity> entities) {
 
         // add screen segmentation (only check other entities in that quadrant)
-        // do i need a iscolliding bool? probably
         
         IntStream.range(0,entities.size())
             .parallel()
@@ -33,7 +31,8 @@ public class colliderSystem implements system{
                 colliderComponent a = e.getComponent(colliderComponent.class);
                 transformComponent at = e.getComponent(transformComponent.class);
 
-                // TODO: add collider offsets
+                a.netPositionX = (int)at.x + a.x;
+                a.netPositionY = (int)at.y + a.y;
 
                 IntStream.range(i+1,entities.size())
                     .parallel()
@@ -43,7 +42,16 @@ public class colliderSystem implements system{
                         colliderComponent b = eb.getComponent(colliderComponent.class);
                         transformComponent bt = eb.getComponent(transformComponent.class);
 
-                        if( (at.x <= (bt.x+b.w) && (at.x+a.w) >= bt.x) && (at.y <= (bt.y+b.h) && (at.y+a.h) >= bt.y) ){
+                        b.netPositionX = (int)bt.x + b.x;
+                        b.netPositionY = (int)bt.y + b.y;
+
+                        //if( (at.x <= (bt.x+b.w) && (at.x+a.w) >= bt.x) && (at.y <= (bt.y+b.h) && (at.y+a.h) >= bt.y) ){
+                        int ax = a.netPositionX;
+                        int ay = a.netPositionY;
+                        int bx = b.netPositionX;
+                        int by = b.netPositionY;
+
+                        if( (ax <= (bx+b.w) && (ax+a.w) >= bx) && (ay <= (by+b.h) && (ay+a.h) >= by) ){
                             System.out.println(Integer.toString(e.id) + " collided with " + Integer.toString(eb.id) );
                             a.isColliding = true;
                             b.isColliding = true;
@@ -51,12 +59,21 @@ public class colliderSystem implements system{
                 });
             }
         });
-        return;
     }
 
     @Override
     public void draw(List<entity> entities, Graphics g) {
-        return;
+        if(debugDrawColliders){
+            for(entity e : entities){
+                if(e.hasComponent(colliderComponent.class) && e.hasComponent(transformComponent.class)){
+                    Graphics2D g2d = (Graphics2D) g;
+                    // transformComponent t = e.getComponent(transformComponent.class);
+                    colliderComponent c = e.getComponent(colliderComponent.class);
+                    g2d.drawRect(c.netPositionX, c.netPositionY, c.w, c.h);
+                }
+            }
+        }
+
     }
 
     // aabb a against b check
@@ -75,6 +92,54 @@ public class colliderSystem implements system{
         }
 
         return false;
+    }
+
+    public boolean AABBisColliding(String tagA, String tagB, manager manager){
+        ArrayList<entity> entitiesA = manager.getTaggedEntities(tagA);
+        ArrayList<entity> entitiesB = manager.getTaggedEntities(tagB);
+
+        ArrayList<Boolean> results = new ArrayList<>();
+
+        if(entitiesA!=null && entitiesB!=null){
+            IntStream.range(0,entitiesA.size())
+                .parallel()
+                .forEach(i -> {
+                    entity e = entitiesA.get(i);
+
+                if(e.hasComponent(colliderComponent.class) && e.hasComponent(transformComponent.class)){
+                    colliderComponent a = e.getComponent(colliderComponent.class);
+                    transformComponent at = e.getComponent(transformComponent.class);
+
+                    a.netPositionX = (int)at.x + a.x;
+                    a.netPositionY = (int)at.y + a.y;
+
+                    IntStream.range(i+1,entitiesB.size())
+                        .parallel()
+                        .forEach(j -> {
+                            
+                            entity eb = entitiesB.get(j);
+                            colliderComponent b = eb.getComponent(colliderComponent.class);
+                            transformComponent bt = eb.getComponent(transformComponent.class);
+
+                            b.netPositionX = (int)bt.x + b.x;
+                            b.netPositionY = (int)bt.y + b.y;
+
+                            //if( (at.x <= (bt.x+b.w) && (at.x+a.w) >= bt.x) && (at.y <= (bt.y+b.h) && (at.y+a.h) >= bt.y) ){
+                            int ax = a.netPositionX;
+                            int ay = a.netPositionY;
+                            int bx = b.netPositionX;
+                            int by = b.netPositionY;
+
+                            if( (ax <= (bx+b.w) && (ax+a.w) >= bx) && (ay <= (by+b.h) && (ay+a.h) >= by) ){
+                                results.add(true);
+                            }
+                    });
+                }
+            });
+        }
+        
+
+        return results.size()>0;
     }
 
 
