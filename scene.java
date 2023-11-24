@@ -57,9 +57,9 @@ public class scene extends JFrame implements KeyListener{
             t.x+=speed;
         }
         if(keys[81]){
-            t.d-=Math.PI/12;
+            t.d-=Math.PI/8;
         }else if(keys[69]){
-            t.d+=Math.PI/12;
+            t.d+=Math.PI/8;
         }
         if(keys[88]){
             entity bullet = new entity(world.entities.size(), "bullet");
@@ -80,12 +80,22 @@ public class scene extends JFrame implements KeyListener{
             world.removeEntity(square);
         }
 
+        if(world.getTaggedEntities("bullet") != null && world.getTaggedEntities("bullet").size() > 0){
+            world.getTaggedEntities("bullet").stream()
+            .parallel()
+            .forEach(e -> {
+                transformComponent et = e.getComponent(transformComponent.class);
+                if(et.x < 0 || et.x > 400 || et.y < 0 || et.y > 400){
+                    world.entities.remove(e);
+                }
+            });
+        }
+
         world.update();
     }
 
     // draw
     public void draw(Graphics g) {
-        
         world.draw(g);
     }
 

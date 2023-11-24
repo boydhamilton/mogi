@@ -2,7 +2,6 @@ package systems;
 
 import java.awt.Graphics;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import ecs.*;
 import components.*;
@@ -17,10 +16,9 @@ public class physicsSystem implements system{ // for velocity acceleration movem
     @Override
     public void update(List<entity> entities) {
 
-        IntStream.range(0, entities.size())
+        entities.stream()
         .parallel()
-        .forEach(i -> {
-            entity e = entities.get(i);
+        .forEach(e -> {
             if(e.hasComponent(transformComponent.class) && e.hasComponent(physicsComponent.class)){
                 transformComponent t = e.getComponent(transformComponent.class);
                 physicsComponent p = e.getComponent(physicsComponent.class);

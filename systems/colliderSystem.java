@@ -68,6 +68,8 @@ public class colliderSystem implements system{
                 if(e.hasComponent(colliderComponent.class) && e.hasComponent(transformComponent.class)){
                     Graphics2D g2d = (Graphics2D) g;
                     // transformComponent t = e.getComponent(transformComponent.class);
+
+
                     colliderComponent c = e.getComponent(colliderComponent.class);
                     g2d.drawRect(c.netPositionX, c.netPositionY, c.w, c.h);
                 }

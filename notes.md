@@ -13,4 +13,5 @@ changing scene to be a type so we can switch scenes, + it would be nice to nest 
 
 tags + tag collision
 - parallize getentity (tag) function, doesnt have to be slow. just add a check to make sure object hasnt been added before
+- hoooow ww to delete entities without collidersystem crashing. cause i can handle parallized object iteration (entity e: entities) but numbers are hard because one is a fucntion of another and it doesnt work
 
