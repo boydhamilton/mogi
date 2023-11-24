@@ -29,7 +29,7 @@ public class scene extends JFrame implements KeyListener{
 
         square.addComponent(new transformComponent(100, 50));
         square.addComponent(new renderComponent("plane.png"));
-        square.addComponent(new colliderComponent(25, 25, 2, 1));
+        square.addComponent(new colliderComponent(25, 25, 20, 1));
         world.addEntity(square);
 
         // ecs

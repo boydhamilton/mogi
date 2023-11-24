@@ -83,7 +83,17 @@ public class colliderSystem implements system{
         colliderComponent bc = b.getComponent(colliderComponent.class);
         transformComponent bt = b.getComponent(transformComponent.class);
 
-        if( (at.x <= (bt.x+bc.w) && (at.x+ac.w) >= bt.x) && (at.y <= (bt.y+bc.h) && (at.y+ac.h) >= bt.y) ){
+        ac.netPositionX = (int)at.x + ac.x;
+        ac.netPositionY = (int)at.y + ac.y;
+        bc.netPositionX = (int)bt.x + bc.x;
+        bc.netPositionY = (int)bt.y + bc.y;
+
+        int ax = ac.netPositionX;
+        int ay = ac.netPositionY;
+        int bx = bc.netPositionX;
+        int by = bc.netPositionY;
+
+        if( (ax <= (bx+bc.w) && (ax+ac.w) >= bx) && (ay <= (by+bc.h) && (ay+ac.h) >= by) ){
             System.out.println(Integer.toString(a.id) + " collided with " + Integer.toString(b.id) );
             ac.isColliding = true;
             bc.isColliding = true;
@@ -124,7 +134,6 @@ public class colliderSystem implements system{
                             b.netPositionX = (int)bt.x + b.x;
                             b.netPositionY = (int)bt.y + b.y;
 
-                            //if( (at.x <= (bt.x+b.w) && (at.x+a.w) >= bt.x) && (at.y <= (bt.y+b.h) && (at.y+a.h) >= bt.y) ){
                             int ax = a.netPositionX;
                             int ay = a.netPositionY;
                             int bx = b.netPositionX;
