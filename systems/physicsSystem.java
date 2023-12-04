@@ -19,7 +19,7 @@ public class physicsSystem implements system{ // for velocity acceleration movem
         entities.stream()
         .parallel()
         .forEach(e -> {
-            if(e.hasComponent(transformComponent.class) && e.hasComponent(physicsComponent.class)){
+            if(e!=null && e.hasComponent(transformComponent.class) && e.hasComponent(physicsComponent.class)){
                 transformComponent t = e.getComponent(transformComponent.class);
                 physicsComponent p = e.getComponent(physicsComponent.class);
 

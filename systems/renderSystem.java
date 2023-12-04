@@ -26,7 +26,7 @@ public class renderSystem implements system{
     public void draw(List<entity> entities, Graphics g) {
         
         for(entity e : entities){
-            if(e.hasComponent(transformComponent.class) && e.hasComponent(renderComponent.class)){
+            if(e!=null && e.hasComponent(transformComponent.class) && e.hasComponent(renderComponent.class)){
                 Graphics2D g2d = (Graphics2D) g;
 
                 transformComponent t = e.getComponent(transformComponent.class);

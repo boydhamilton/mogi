@@ -27,7 +27,7 @@ public class colliderSystem implements system{
             .forEach(i -> {
                 entity e = entities.get(i);
 
-            if(e.hasComponent(colliderComponent.class) && e.hasComponent(transformComponent.class)){
+            if(e!=null && e.hasComponent(colliderComponent.class) && e.hasComponent(transformComponent.class)){
                 colliderComponent a = e.getComponent(colliderComponent.class);
                 transformComponent at = e.getComponent(transformComponent.class);
 
@@ -39,23 +39,27 @@ public class colliderSystem implements system{
                     .forEach(j -> {
                         
                         entity eb = entities.get(j);
-                        colliderComponent b = eb.getComponent(colliderComponent.class);
-                        transformComponent bt = eb.getComponent(transformComponent.class);
 
-                        b.netPositionX = (int)bt.x + b.x;
-                        b.netPositionY = (int)bt.y + b.y;
+                        if(eb!=null && eb.hasComponent(transformComponent.class) && eb.hasComponent(colliderComponent.class)){
+                            colliderComponent b = eb.getComponent(colliderComponent.class);
+                            transformComponent bt = eb.getComponent(transformComponent.class);
 
-                        //if( (at.x <= (bt.x+b.w) && (at.x+a.w) >= bt.x) && (at.y <= (bt.y+b.h) && (at.y+a.h) >= bt.y) ){
-                        int ax = a.netPositionX;
-                        int ay = a.netPositionY;
-                        int bx = b.netPositionX;
-                        int by = b.netPositionY;
+                            b.netPositionX = (int)bt.x + b.x;
+                            b.netPositionY = (int)bt.y + b.y;
 
-                        if( (ax <= (bx+b.w) && (ax+a.w) >= bx) && (ay <= (by+b.h) && (ay+a.h) >= by) ){
-                            System.out.println(Integer.toString(e.id) + " collided with " + Integer.toString(eb.id) );
-                            a.isColliding = true;
-                            b.isColliding = true;
+                            //if( (at.x <= (bt.x+b.w) && (at.x+a.w) >= bt.x) && (at.y <= (bt.y+b.h) && (at.y+a.h) >= bt.y) ){
+                            int ax = a.netPositionX;
+                            int ay = a.netPositionY;
+                            int bx = b.netPositionX;
+                            int by = b.netPositionY;
+
+                            if( (ax <= (bx+b.w) && (ax+a.w) >= bx) && (ay <= (by+b.h) && (ay+a.h) >= by) ){
+                                System.out.println(Integer.toString(e.id) + " collided with " + Integer.toString(eb.id) );
+                                a.isColliding = true;
+                                b.isColliding = true;
+                            }
                         }
+                        
                 });
             }
         });
@@ -65,7 +69,7 @@ public class colliderSystem implements system{
     public void draw(List<entity> entities, Graphics g) {
         if(debugDrawColliders){
             for(entity e : entities){
-                if(e.hasComponent(colliderComponent.class) && e.hasComponent(transformComponent.class)){
+                if(e!=null && e.hasComponent(colliderComponent.class) && e.hasComponent(transformComponent.class)){
                     Graphics2D g2d = (Graphics2D) g;
                     // transformComponent t = e.getComponent(transformComponent.class);
 
@@ -118,7 +122,7 @@ public class colliderSystem implements system{
                 .forEach(i -> {
                     entity e = entitiesA.get(i);
 
-                if(e.hasComponent(colliderComponent.class) && e.hasComponent(transformComponent.class)){
+                if(e!=null && e.hasComponent(colliderComponent.class) && e.hasComponent(transformComponent.class)){
                     colliderComponent a = e.getComponent(colliderComponent.class);
                     transformComponent at = e.getComponent(transformComponent.class);
 
@@ -130,20 +134,24 @@ public class colliderSystem implements system{
                         .forEach(j -> {
                             
                             entity eb = entitiesB.get(j);
-                            colliderComponent b = eb.getComponent(colliderComponent.class);
-                            transformComponent bt = eb.getComponent(transformComponent.class);
 
-                            b.netPositionX = (int)bt.x + b.x;
-                            b.netPositionY = (int)bt.y + b.y;
+                            if(eb!=null && eb.hasComponent(colliderComponent.class) && eb.hasComponent(transformComponent.class)){
+                                colliderComponent b = eb.getComponent(colliderComponent.class);
+                                transformComponent bt = eb.getComponent(transformComponent.class);
 
-                            int ax = a.netPositionX;
-                            int ay = a.netPositionY;
-                            int bx = b.netPositionX;
-                            int by = b.netPositionY;
+                                b.netPositionX = (int)bt.x + b.x;
+                                b.netPositionY = (int)bt.y + b.y;
 
-                            if( (ax <= (bx+b.w) && (ax+a.w) >= bx) && (ay <= (by+b.h) && (ay+a.h) >= by) ){
-                                results.add(true);
+                                int ax = a.netPositionX;
+                                int ay = a.netPositionY;
+                                int bx = b.netPositionX;
+                                int by = b.netPositionY;
+
+                                if( (ax <= (bx+b.w) && (ax+a.w) >= bx) && (ay <= (by+b.h) && (ay+a.h) >= by) ){
+                                    results.add(true);
+                                }
                             }
+                            
                     });
                 }
             });
