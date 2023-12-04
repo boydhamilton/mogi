@@ -1,13 +1,14 @@
 package ecs;
 
 import java.util.ArrayList;
+
 import java.awt.*;
 
-public class manager {
+public class manager { // expanded past ecs manager and also handles scene management
     public ArrayList<system> systems = new ArrayList<>();
     public ArrayList<entity> entities = new ArrayList<>();
 
-
+    
     public void addSystem(system s){
         systems.add(s);
     }

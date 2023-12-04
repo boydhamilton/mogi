@@ -2,7 +2,9 @@ package ecs;
 import java.util.ArrayList;
 
 
+
 public class entity {
+    //scene.manager s = new scene.manager();
     public int id;
     public String tag;
 

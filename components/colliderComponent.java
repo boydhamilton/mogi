@@ -8,7 +8,6 @@ public class colliderComponent extends component{
     public int x,y; // offset from transform
     public boolean isColliding; // set in system
 
-    // for debug drawing
     public int netPositionX, netPositionY;
 
     public colliderComponent(int w, int h){
