@@ -10,7 +10,7 @@ import components.*;
 
 public class colliderSystem implements system{
     
-    boolean debugDrawColliders = true;
+    boolean debugDrawColliders = exec.manager.DEBUG;
 
     @Override
     public void init(List<entity> entities) {
@@ -54,7 +54,7 @@ public class colliderSystem implements system{
                             int by = b.netPositionY;
 
                             if( (ax <= (bx+b.w) && (ax+a.w) >= bx) && (ay <= (by+b.h) && (ay+a.h) >= by) ){
-                                System.out.println(Integer.toString(e.id) + " collided with " + Integer.toString(eb.id) );
+                                exec.manager.writeToLog(Integer.toString(e.id) + " collided with " + Integer.toString(eb.id));
                                 a.isColliding = true;
                                 b.isColliding = true;
                             }
@@ -72,7 +72,6 @@ public class colliderSystem implements system{
                 if(e!=null && e.hasComponent(colliderComponent.class) && e.hasComponent(transformComponent.class)){
                     Graphics2D g2d = (Graphics2D) g;
                     // transformComponent t = e.getComponent(transformComponent.class);
-
 
                     colliderComponent c = e.getComponent(colliderComponent.class);
                     g2d.drawRect(c.netPositionX, c.netPositionY, c.w, c.h);

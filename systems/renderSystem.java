@@ -34,7 +34,7 @@ public class renderSystem implements system{
         
                 int x = (int)t.x;
                 int y = (int)t.y;
-                float d = t.d;
+                float d = t.r;
                 int w = r.w;
                 int h = r.h;
 

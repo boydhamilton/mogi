@@ -18,6 +18,10 @@ public class scene extends JFrame implements KeyListener{
         return;
     }*/
 
+    public void init(){
+        return;
+    }
+
     public void update(){
         return;
     }

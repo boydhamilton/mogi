@@ -14,12 +14,15 @@ class Surface extends JPanel {
     public scene currentScene;
 
     public Surface(){
+        manager.deleteLog();
         currentScene = new app.launch(); // need to call main.java from parent
-        //currentScene.init();
+        currentScene.init();
         repaint();
+        manager.createLog();
     }
     public void setScene(scene newScene){
         this.currentScene = newScene;
+        currentScene.init();
         repaint();
     }
 

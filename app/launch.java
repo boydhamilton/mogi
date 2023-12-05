@@ -23,7 +23,8 @@ public class launch extends scene{
     entity plane = new entity(0);
     entity square = new entity(1, "square");
 
-    public launch(){
+    @Override
+    public void init(){
         plane.addComponent(new transformComponent(50, 50));
         plane.addComponent(new renderComponent("app/plane.png"));
         plane.addComponent(new colliderComponent(25, 25, 2, 1));
@@ -59,9 +60,9 @@ public class launch extends scene{
             t.x+=speed;
         }
         if(scene.keyDown(81)){
-            t.d-=Math.PI/8;
+            t.r-=Math.PI/8;
         }else if(scene.keyDown(69)){
-            t.d+=Math.PI/8;
+            t.r+=Math.PI/8;
         }
         if(keys[88]){ // alternative to keyDown, initialize above
             entity bullet = new entity(world.entities.size(), "bullet");
@@ -70,8 +71,8 @@ public class launch extends scene{
             bullet.addComponent(new renderComponent("app/plane.png"));
             bullet.addComponent(new colliderComponent(5, 5, 15, 15));
 
-            float vx = (float)Math.cos(pt.d - Math.PI/2) * 10;
-            float vy = (float)Math.sin(pt.d - Math.PI/2) * 10;
+            float vx = (float)Math.cos(pt.r - Math.PI/2) * 10;
+            float vy = (float)Math.sin(pt.r - Math.PI/2) * 10;
 
             bullet.addComponent(new physicsComponent(new float[] {vx,vy}, 1, 1, 10));
             world.addEntity(bullet);
