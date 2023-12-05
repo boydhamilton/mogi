@@ -5,9 +5,7 @@
 
 An ECS (Entity Component System) operates by having arrays of entities, each of which are composed of components, each of which operate on their own system.
 Entities contain components which contain data. It is then up to the systems (each of which have their own update/draw loops), to do something with that data. A rendering component may contain the file for an image, but it is up to the rendering system to then paint it to the surface (of which there is only one in mogi).
-Example of how an ECS may function:
 
-![Alt text](github_resources/image.png)
 
 ## APP CREATION
 There is an enforced file structure, any application you make must go in the app folder. The main class must be launch.java. This is because we must pass a scene on init to the run file. There are ways around it certainly if you truly wish, but this is the most straightforward way to use mogi.
