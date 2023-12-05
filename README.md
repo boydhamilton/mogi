@@ -4,8 +4,12 @@
 ## ECS (breakdown)
 
 An ECS (Entity Component System) operates by having arrays of entities, each of which are composed of components, each of which operate on their own system.
-Entities contain components which contain data. It is then up to the systems (each of which have their own update/draw loops), to do something with that data. A rendering component may contain the file for an image, but it is up to the rendering system to then paint it to the surface (of which there is only one in mogi lolz).
+Entities contain components which contain data. It is then up to the systems (each of which have their own update/draw loops), to do something with that data. A rendering component may contain the file for an image, but it is up to the rendering system to then paint it to the surface (of which there is only one in mogi).
+
 ![Alt text](github_resources/image.png)
+
+## APP CREATION
+There is enforced file structure, any application you make must go in the app folder with the 
 
 ## ENTITIES
 
