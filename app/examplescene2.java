@@ -4,21 +4,35 @@ package app;
 import java.awt.Graphics;
 
 import exec.*;
+import ecs.*;
+import ecs.manager;
+import components.*;
+import systems.*;
 
+// TODO: Write about systems in readme, could do a quick thing about creating entity objects?
 
 public class examplescene2 extends scene{
+    public ecs.manager world = new manager();
 
-    public examplescene2(){
-        System.out.println("hello from examplescene2");
+    entity plane;
+
+    @Override
+    public void init(){
+
+        plane = new app.objects.plane(0, "Plane");
+        world.addEntity(plane);
+
+        world.addSystem(new colliderSystem());
+        world.addSystem(new renderSystem());
     }
 
     @Override
     public void update(){
-        System.out.println("updatin 2");
+        world.update();
     }
 
     @Override
     public void draw(Graphics g){
-        System.out.println("drawn 2");
+        world.draw(g);
     }
 }

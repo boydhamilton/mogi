@@ -25,6 +25,10 @@ public class manager {
         manager.windowTitle = windowTitle;
     }
 
+    public static int charToKeyCode(char c){
+        return java.awt.event.KeyEvent.getExtendedKeyCodeForChar(c);
+    }
+
     // log stuff
     public static void createLog(){
         if(DEBUG){

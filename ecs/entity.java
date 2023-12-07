@@ -10,6 +10,11 @@ public class entity {
 
     public ArrayList<component> components = new ArrayList<>();
 
+    public entity(){ // constructor for when used as extension, can set id and tag in new object
+        this.id = Integer.MIN_VALUE + 1; // chosen as it's doubtful there will be conflicts
+        this.tag = null;
+    }
+
     public entity(int id){
         this.id = id;
         this.tag = null;

@@ -33,11 +33,14 @@ public class scene extends JFrame implements KeyListener{
     public static boolean keyDown(int keyCode){
         return keys[keyCode];
     }
+    public static boolean keyDown(char keyCode){
+        return keys[java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyCode)];
+    }
 
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
+        exec.manager.writeToLog(e.getKeyChar() + " " + Integer.toString(e.getKeyCode()));
 
         if(!keys[e.getKeyCode()]){
             keys[e.getKeyCode()] = true;        

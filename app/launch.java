@@ -9,10 +9,11 @@ import components.*;
 import systems.*;
 
 // run creates a new instance of app.launch, so file structure is enforced
+// 
 
 public class launch extends scene{
 
-    boolean[] keys = scene.keys; // can do this technically. use keyDown(keyCode) function
+    boolean[] keys = scene.keys; // can do this technically. use keyDown(keyCode) or keyDown(keyChar) function
 
     // ecs
     ecs.manager world = new ecs.manager();
@@ -26,12 +27,12 @@ public class launch extends scene{
     @Override
     public void init(){
         plane.addComponent(new transformComponent(50, 50));
-        plane.addComponent(new renderComponent("app/plane.png"));
+        plane.addComponent(new renderComponent("app/resources/plane.png"));
         plane.addComponent(new colliderComponent(25, 25, 2, 1));
         world.addEntity(plane);
 
         square.addComponent(new transformComponent(100, 50));
-        square.addComponent(new renderComponent("app/plane.png"));
+        square.addComponent(new renderComponent("app/resources/plane.png"));
         square.addComponent(new colliderComponent(25, 25, 20, 1));
         world.addEntity(square);
 
@@ -68,7 +69,7 @@ public class launch extends scene{
             entity bullet = new entity(world.entities.size(), "bullet");
             transformComponent pt = plane.getComponent(transformComponent.class);
             bullet.addComponent(new transformComponent((int)pt.x, (int)pt.y));
-            bullet.addComponent(new renderComponent("app/plane.png"));
+            bullet.addComponent(new renderComponent("app/resources/plane.png"));
             bullet.addComponent(new colliderComponent(5, 5, 15, 15));
 
             float vx = (float)Math.cos(pt.r - Math.PI/2) * 10;
@@ -77,7 +78,7 @@ public class launch extends scene{
             bullet.addComponent(new physicsComponent(new float[] {vx,vy}, 1, 1, 10));
             world.addEntity(bullet);
         }
-        if(scene.keyDown(77)){
+        if(scene.keyDown('m')){
             exec.manager.switchScene(run.surface, new examplescene2());
         }
 
