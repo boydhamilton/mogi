@@ -51,7 +51,7 @@ Within the overridden update and draw methods from before, add
     world.draw(g); // in draw
 ```
 
-Adding components [Discussed below](#ENTITIES):
+Adding components [below](#ENTITIES):
 ```java
     entity.addComponent(new component());
 ```
