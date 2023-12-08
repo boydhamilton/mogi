@@ -59,7 +59,7 @@ Adding components (discussed more below):
 Entities are  not added automatically to the ECS. After defining the entity, call the ```addEntity``` method from the manager object.
 
 ```java
-    world.addEntity(entity entity);
+    world.addEntity(entity);
 ```
 
 In order for the components to be of use, we must utilize systems. This is spoken about more in the ECS breakdown. The systems, however, are not added automatically.
