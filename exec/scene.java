@@ -40,7 +40,7 @@ public class scene extends JFrame implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        exec.manager.writeToLog(e.getKeyChar() + " " + Integer.toString(e.getKeyCode()));
+        exec.manager.writeToLog(e.getKeyChar() + " " + Integer.toString(e.getKeyCode())); // could remove
 
         if(!keys[e.getKeyCode()]){
             keys[e.getKeyCode()] = true;        

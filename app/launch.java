@@ -26,6 +26,9 @@ public class launch extends scene{
 
     @Override
     public void init(){
+        exec.manager.setWindowDimensions(500,500);
+        exec.manager.setWindowTitle("game");
+
         plane.addComponent(new transformComponent(50, 50));
         plane.addComponent(new renderComponent("app/resources/plane.png"));
         plane.addComponent(new colliderComponent(25, 25, 2, 1));
@@ -50,19 +53,19 @@ public class launch extends scene{
 
         transformComponent t = plane.getComponent(transformComponent.class);
 
-        if(scene.keyDown(87)){ // w and s are weird, tested with other buttons and it worked fine
+        if(scene.keyDown('w')){ // w and s are weird, tested with other buttons and it worked fine
             t.y-=speed;
-        }else if(scene.keyDown(83)){
+        }else if(scene.keyDown('s')){
             t.y+=speed;
         }
-        if(scene.keyDown(65)){
+        if(scene.keyDown('a')){
             t.x-=speed;
-        }else if(scene.keyDown(68)){
+        }else if(scene.keyDown('d')){
             t.x+=speed;
         }
-        if(scene.keyDown(81)){
+        if(scene.keyDown('q')){
             t.r-=Math.PI/8;
-        }else if(scene.keyDown(69)){
+        }else if(scene.keyDown('e')){
             t.r+=Math.PI/8;
         }
         if(keys[88]){ // alternative to keyDown, initialize above
@@ -79,9 +82,8 @@ public class launch extends scene{
             world.addEntity(bullet);
         }
         if(scene.keyDown('m')){
-            exec.manager.switchScene(run.surface, new examplescene2());
+            exec.manager.switchScene(run.surface, new launch());
         }
-
 
         if(colliderSystem.AABBisColliding(square.tag, "bullet", world)){
             world.removeEntity(square);

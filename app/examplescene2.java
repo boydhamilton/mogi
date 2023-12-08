@@ -19,6 +19,7 @@ public class examplescene2 extends scene{
     @Override
     public void init(){
 
+
         plane = new app.objects.plane(0, "Plane");
         world.addEntity(plane);
 
@@ -28,6 +29,10 @@ public class examplescene2 extends scene{
 
     @Override
     public void update(){
+        if(scene.keyDown('s')){
+            plane.getComponent(transformComponent.class).y -= 1;
+        }
+
         world.update();
     }
 

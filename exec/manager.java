@@ -17,11 +17,11 @@ public class manager {
         surface.setScene(s);
     }
 
-    public void setWindowDimensions(int w, int h){
+    public static void setWindowDimensions(int w, int h){
         manager.windowWidth = w;
         manager.windowHeight = h;
     }
-    public void setWindowTitle(String windowTitle){
+    public static void setWindowTitle(String windowTitle){
         manager.windowTitle = windowTitle;
     }
 
