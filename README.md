@@ -25,6 +25,18 @@ public class launch extends scene{
 }
 ```
 
+You can use functions within the execution manager such as `setWindowDimensions(int w, int h)` and `setWindowTitle(String title)` can be used for customizing the window on launch.
+```java
+    @Override // in launch.java (need to call on boot)
+    public void init(){
+        exec.manager.setWindowDimensions(500,500);
+        exec.manager.setWindowTitle("game");
+
+        // other init stuff...
+    }
+```
+If needed, can edit exec.run to fulfill any other window requirements you may have.
+
 ## USING THE ECS
 To initialize the ECS, you must create an ECS manager to handle all system and entity addition, removal, updating, and drawing.
 
