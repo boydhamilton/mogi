@@ -70,7 +70,7 @@ In order for the components to be of use, we must utilize systems. This is spoke
 
 ## ENTITIES
 
-New entity demo: (in app folder there should be a more in depth example)
+New entity demo:
 
 ```java
 ecs.manager world = new ecs.manager();
@@ -80,6 +80,30 @@ plane.addComponent(new transformComponent(50, 50));
 plane.addComponent(new renderComponent("app/plane.png"));
 
 world.addEntity(plane);
+```
+
+To create an independent entity object with constant components, simply extend the entity class. *MAKE SURE YOU ADD AN ID*, it is essential for ECS operation.
+You can elaborate on this structure by passing more arguments to the constructor and allowing for further component customization.
+
+```java
+public class plane extends entity{
+
+    public plane(int id, String tag){ // tag is not essential, though id is
+        this.id = id;
+        this.tag = tag;
+        this.addComponent(new transformComponent(10, 10, 0));
+        this.addComponent(new renderComponent("app/resources/plane.png"));
+        this.addComponent(new colliderComponent(10, 10));
+    }
+}
+public class thisIsPlaneScene extends scene{
+    entity player;
+
+    @Override
+    public void init(){
+        player = new plane();
+    }
+}
 ```
 
 ### TRANSFORM:
@@ -144,6 +168,8 @@ code is in collider system, but doesn't work and so is not used in any demos
 
 ## INPUT
 
+Because mogi was originally made to build games that operate without a mouse, there is no native support for mouse or mousebutton input yet. 
+
 There are a few options for processing input, scene.keys is a boolean array with index corresponding to key code. Use 
 
 ```java
@@ -158,5 +184,25 @@ scene.keyDown(int keyCode)
 ```
 
 Both of which return a boolean that is true if the key is depressed and false otherwise.
+
+## SCENES
+
+Scenes are objects extending the exec.scene class. There is an `init()` function that is called when the scene is initialized (either on launch or on load), `update()` function that is called periodically every frame, and a `draw()` function that is called immediately after the update.
+
+Scene structure explained [here](#app-creation).
+
+To load other scenes, call the `loadScene(scene scene)` from the execution manager.
+To reload current scene, you cannot use the `this` operator, you must use `new scenename()`.
+
+Example:
+
+```java
+    if(scene.keyDown('m')){
+        exec.manager.loadScene(new launch());
+    }
+    if(scene.keyDown('n')){
+        exec.manager.loadScene(new examplescene2());
+    }
+```
 
 

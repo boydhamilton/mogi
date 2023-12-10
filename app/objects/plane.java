@@ -1,6 +1,5 @@
 package app.objects;
 
-import exec.manager;
 import ecs.*;
 import components.*;
 

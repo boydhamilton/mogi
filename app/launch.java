@@ -9,7 +9,6 @@ import components.*;
 import systems.*;
 
 // run creates a new instance of app.launch, so file structure is enforced
-// 
 
 public class launch extends scene{
 
@@ -82,7 +81,10 @@ public class launch extends scene{
             world.addEntity(bullet);
         }
         if(scene.keyDown('m')){
-            exec.manager.switchScene(run.surface, new launch());
+            exec.manager.loadScene(new launch());
+        }
+        if(scene.keyDown('n')){
+            exec.manager.loadScene(new examplescene2());
         }
 
         if(colliderSystem.AABBisColliding(square.tag, "bullet", world)){

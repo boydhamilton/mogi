@@ -13,10 +13,13 @@ public class manager {
 
     public static boolean DEBUG = true;
 
-    public static void switchScene(Surface surface, scene s){
-        surface.setScene(s);
+
+    // scene
+    public static void loadScene(scene scene){
+        run.surface.setScene(scene);
     }
 
+    // window
     public static void setWindowDimensions(int w, int h){
         manager.windowWidth = w;
         manager.windowHeight = h;
@@ -25,34 +28,31 @@ public class manager {
         manager.windowTitle = windowTitle;
     }
 
+    // i remember this was useful for something but idr what. gonna leave it in
     public static int charToKeyCode(char c){
         return java.awt.event.KeyEvent.getExtendedKeyCodeForChar(c);
     }
 
     // log stuff
     public static void createLog(){
-        if(DEBUG){
-            try{
-            File log = new File("exec/log.log");
-                if(log.createNewFile()){
-                    writeToLog("Log created");
-                }else{
-                    writeToLog("Attempted to create log when log already exists");
-                }
-            }catch(IOException e){
-                e.printStackTrace();
+        try{
+        File log = new File("exec/log.log");
+            if(log.createNewFile()){
+                writeToLog("Log created");
+            }else{
+                writeToLog("Attempted to create log when log already exists");
             }
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
     public static void deleteLog(){
-        if(DEBUG){
-            File log = new File("exec/log.log");
-            if(log.delete()){
-                System.out.println("Log cleared");
-            }else{
-                System.out.println("Log clear failed");
-            }
+        File log = new File("exec/log.log");
+        if(log.delete()){
+            System.out.println("Log cleared");
+        }else{
+            System.out.println("Log clear failed");
         }
     }
 

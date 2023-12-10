@@ -20,7 +20,7 @@ public class examplescene2 extends scene{
     public void init(){
 
 
-        plane = new app.objects.plane(0, "Plane");
+        plane = new app.objects.plane(0, "plane");
         world.addEntity(plane);
 
         world.addSystem(new colliderSystem());

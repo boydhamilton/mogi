@@ -34,7 +34,7 @@ public class scene extends JFrame implements KeyListener{
         return keys[keyCode];
     }
     public static boolean keyDown(char keyCode){
-        return keys[java.awt.event.KeyEvent.getExtendedKeyCodeForChar(keyCode)];
+        return keys[exec.manager.charToKeyCode(keyCode)];
     }
 
 
