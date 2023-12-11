@@ -23,6 +23,9 @@ public class launch extends scene{
     entity plane = new entity(0);
     entity square = new entity(1, "square");
 
+    int speed = 10;
+    audioPlayback player = new audioPlayback();
+
     @Override
     public void init(){
         exec.manager.setWindowDimensions(500,500);
@@ -46,13 +49,13 @@ public class launch extends scene{
         world.init();
     }
 
-    int speed = 10;
+    
     @Override
     public void update(){
 
         transformComponent t = plane.getComponent(transformComponent.class);
 
-        if(scene.keyDown('w')){ // w and s are weird, tested with other buttons and it worked fine
+        if(scene.keyDown('w')){
             t.y-=speed;
         }else if(scene.keyDown('s')){
             t.y+=speed;
@@ -67,13 +70,13 @@ public class launch extends scene{
         }else if(scene.keyDown('e')){
             t.r+=Math.PI/8;
         }
-        if(keys[88]){ // alternative to keyDown, initialize above
+        if(keys[88]){ // alternative to keyDown, initialize keys above
             entity bullet = new entity(world.entities.size(), "bullet");
             transformComponent pt = plane.getComponent(transformComponent.class);
             bullet.addComponent(new transformComponent((int)pt.x, (int)pt.y));
             bullet.addComponent(new renderComponent("app/resources/plane.png"));
             bullet.addComponent(new colliderComponent(5, 5, 15, 15));
-
+            player.playSound("app/resources/shot.wav");
             float vx = (float)Math.cos(pt.r - Math.PI/2) * 10;
             float vy = (float)Math.sin(pt.r - Math.PI/2) * 10;
 

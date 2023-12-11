@@ -36,7 +36,7 @@ public class manager {
     // log stuff
     public static void createLog(){
         try{
-        File log = new File("exec/log.log");
+            File log = new File("exec/log.log");
             if(log.createNewFile()){
                 writeToLog("Log created");
             }else{
@@ -59,10 +59,10 @@ public class manager {
     public static void writeToLog(String line){
         if(DEBUG){
             try{
-            FileWriter writer = new FileWriter("exec/log.log", true);
-            writer.write('\n');
-            writer.write(line + " @" + java.time.LocalTime.now());
-            writer.close();
+                FileWriter writer = new FileWriter("exec/log.log", true);
+                writer.write('\n');
+                writer.write(line + " @" + java.time.LocalTime.now());
+                writer.close();
             }catch(IOException e){
                 e.printStackTrace();
             }
