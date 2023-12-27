@@ -1,4 +1,4 @@
-package systems;
+package m.engine;
 
 import java.io.File;
 
@@ -10,7 +10,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 
-public class audioPlayback implements LineListener{
+public class audio implements LineListener{
 
     boolean clipIsPlaying = false;
     public void playSound(String src){ // small clips
@@ -26,7 +26,7 @@ public class audioPlayback implements LineListener{
             audioClip.start();
 
             if(audioClip.getMicrosecondLength() <= audioClip.getMicrosecondPosition()){
-                System.out.println("ad"); // never called, never closed
+                System.out.println("ad"); // never called ergo never closed
                 audioClip.close();
                 audioStream.close();
             }

@@ -1,7 +1,7 @@
 package app.objects;
 
-import ecs.*;
-import components.*;
+import m.ecs.*;
+import m.ecs.components.*;
 
 public class plane extends entity{
 

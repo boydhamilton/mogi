@@ -1,16 +1,16 @@
-package systems;
+package m.ecs.systems;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.*;
 import java.util.stream.IntStream;
 
-import ecs.*;
-import components.*;
+import m.ecs.*;
+import m.ecs.components.*;
 
 public class colliderSystem implements system{
     
-    boolean debugDrawColliders = exec.manager.DEBUG;
+    boolean debugDrawColliders = m.exec.manager.DEBUG;
 
     @Override
     public void init(List<entity> entities) {
@@ -54,7 +54,7 @@ public class colliderSystem implements system{
                             int by = b.netPositionY;
 
                             if( (ax <= (bx+b.w) && (ax+a.w) >= bx) && (ay <= (by+b.h) && (ay+a.h) >= by) ){
-                                exec.manager.writeToLog(Integer.toString(e.id) + " collided with " + Integer.toString(eb.id));
+                                m.exec.manager.writeToLog(Integer.toString(e.id) + "collided with " + Integer.toString(eb.id));
                                 a.isColliding = true;
                                 b.isColliding = true;
                             }

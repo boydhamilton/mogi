@@ -1,9 +1,9 @@
-package exec;
+package m.engine;
+
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
-
 
 public class scene extends JFrame implements KeyListener{
 
@@ -34,13 +34,17 @@ public class scene extends JFrame implements KeyListener{
         return keys[keyCode];
     }
     public static boolean keyDown(char keyCode){
-        return keys[exec.manager.charToKeyCode(keyCode)];
+        return keys[charToKeyCode(keyCode)];
+    }
+    // good to have? idk
+    public static int charToKeyCode(char c){
+        return java.awt.event.KeyEvent.getExtendedKeyCodeForChar(c);
     }
 
 
     @Override
     public void keyPressed(KeyEvent e) {
-        exec.manager.writeToLog(e.getKeyChar() + " " + Integer.toString(e.getKeyCode())); // could remove
+        m.exec.manager.writeToLog(e.getKeyChar() + " " + Integer.toString(e.getKeyCode())); // could remove
 
         if(!keys[e.getKeyCode()]){
             keys[e.getKeyCode()] = true;        

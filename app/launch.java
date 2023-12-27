@@ -3,10 +3,11 @@ package app;
 
 import java.awt.Graphics;
 
-import ecs.*;
-import exec.*;
-import components.*;
-import systems.*;
+import m.ecs.*;
+import m.ecs.components.*;
+import m.ecs.systems.*;
+import m.engine.*;
+import m.exec.manager;
 
 // run creates a new instance of app.launch, so file structure is enforced
 
@@ -15,7 +16,7 @@ public class launch extends scene{
     boolean[] keys = scene.keys; // can do this technically. use keyDown(keyCode) or keyDown(keyChar) function
 
     // ecs
-    ecs.manager world = new ecs.manager();
+    m.ecs.manager world = new m.ecs.manager(); // full name because im really smart and named two managers which can lead to ambiguity no one wants that
     renderSystem renderSystem = new renderSystem();
     colliderSystem colliderSystem = new colliderSystem();
     physicsSystem physicsSystem = new physicsSystem();
@@ -24,12 +25,12 @@ public class launch extends scene{
     entity square = new entity(1, "square");
 
     int speed = 10;
-    audioPlayback player = new audioPlayback();
+    audio player = new audio();
 
     @Override
     public void init(){
-        exec.manager.setWindowDimensions(500,500);
-        exec.manager.setWindowTitle("game");
+        m.exec.manager.setWindowDimensions(500,500);
+        m.exec.manager.setWindowTitle("game");
 
         plane.addComponent(new transformComponent(50, 50));
         plane.addComponent(new renderComponent("app/resources/plane.png"));
@@ -84,10 +85,10 @@ public class launch extends scene{
             world.addEntity(bullet);
         }
         if(scene.keyDown('m')){
-            exec.manager.loadScene(new launch());
+            manager.loadScene(new launch());
         }
         if(scene.keyDown('n')){
-            exec.manager.loadScene(new examplescene2());
+            manager.loadScene(new examplescene2());
         }
 
         if(colliderSystem.AABBisColliding(square.tag, "bullet", world)){

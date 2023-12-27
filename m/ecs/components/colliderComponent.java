@@ -1,6 +1,6 @@
-package components;
+package m.ecs.components;
 
-import ecs.component;
+import m.ecs.component;
 
 public class colliderComponent extends component{
 
