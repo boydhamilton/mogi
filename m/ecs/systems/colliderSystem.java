@@ -10,7 +10,7 @@ import m.ecs.components.*;
 
 public class colliderSystem implements system{
     
-    boolean debugDrawColliders = m.exec.manager.DEBUG;
+    boolean debugDrawColliders = m.exec.gameManager.DEBUG;
 
     @Override
     public void init(List<entity> entities) {
@@ -54,7 +54,7 @@ public class colliderSystem implements system{
                             int by = b.netPositionY;
 
                             if( (ax <= (bx+b.w) && (ax+a.w) >= bx) && (ay <= (by+b.h) && (ay+a.h) >= by) ){
-                                m.exec.manager.writeToLog(Integer.toString(e.id) + "collided with " + Integer.toString(eb.id));
+                                m.exec.gameManager.writeToLog(Integer.toString(e.id) + "collided with " + Integer.toString(eb.id));
                                 a.isColliding = true;
                                 b.isColliding = true;
                             }
@@ -109,7 +109,7 @@ public class colliderSystem implements system{
         return false;
     }
 
-    public boolean AABBisColliding(String tagA, String tagB, manager manager){
+    public boolean AABBisColliding(String tagA, String tagB, ECSManager manager){
         ArrayList<entity> entitiesA = manager.getTaggedEntities(tagA);
         ArrayList<entity> entitiesB = manager.getTaggedEntities(tagB);
 

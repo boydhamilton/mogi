@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import m.engine.scene;
 
-public class manager {
+public class gameManager {
 
     // FRAME VARIABLES
     public static int windowWidth = 500;
@@ -23,11 +23,11 @@ public class manager {
 
     // window
     public static void setWindowDimensions(int w, int h){
-        manager.windowWidth = w;
-        manager.windowHeight = h;
+        gameManager.windowWidth = w;
+        gameManager.windowHeight = h;
     }
     public static void setWindowTitle(String windowTitle){
-        manager.windowTitle = windowTitle;
+        gameManager.windowTitle = windowTitle;
     }
     
 

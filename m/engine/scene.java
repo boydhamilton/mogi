@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import m.exec.*;
 
 public class scene extends JFrame implements KeyListener{
 
@@ -44,7 +45,7 @@ public class scene extends JFrame implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        m.exec.manager.writeToLog(e.getKeyChar() + " " + Integer.toString(e.getKeyCode())); // could remove
+        gameManager.writeToLog(e.getKeyChar() + " " + Integer.toString(e.getKeyCode())); // could remove
 
         if(!keys[e.getKeyCode()]){
             keys[e.getKeyCode()] = true;        

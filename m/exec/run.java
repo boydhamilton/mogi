@@ -16,11 +16,11 @@ class Surface extends JPanel {
     public scene currentScene;
 
     public Surface(){
-        manager.deleteLog();
+        gameManager.deleteLog();
         currentScene = new app.launch(); // need to call main.java from parent
         currentScene.init();
         repaint();
-        manager.createLog();
+        gameManager.createLog();
     }
     public void setScene(scene newScene){
         this.currentScene = newScene;
@@ -43,12 +43,12 @@ public class run{
 
     public static void main(String[] args){
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame(manager.windowTitle);
+            JFrame frame = new JFrame(gameManager.windowTitle);
 
             // set frame
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.add(surface);
-            frame.setSize(manager.windowWidth, manager.windowHeight);
+            frame.setSize(gameManager.windowWidth, gameManager.windowHeight);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.addKeyListener(surface.currentScene);
