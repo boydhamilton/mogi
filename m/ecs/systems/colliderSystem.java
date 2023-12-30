@@ -31,7 +31,7 @@ public class colliderSystem implements system{
                 colliderComponent a = e.getComponent(colliderComponent.class);
                 transformComponent at = e.getComponent(transformComponent.class);
 
-                a.netPositionX = (int)at.x + a.x;
+                a.netPositionX = (int)at.x + a.x; // TODO: collider offsets have never worked. figure out some abs thing where its dependant on position?? idk
                 a.netPositionY = (int)at.y + a.y;
 
                 IntStream.range(i+1,entities.size())

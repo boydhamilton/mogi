@@ -7,7 +7,7 @@ import m.ecs.*;
 import m.ecs.components.*;
 import m.ecs.systems.*;
 import m.engine.*;
-import m.exec.gameManager;
+import m.exec.*;
 
 // run creates a new instance of app.launch, so file structure is enforced
 
@@ -16,16 +16,15 @@ public class launch extends scene{
     boolean[] keys = scene.keys; // can do this technically. use keyDown(keyCode) or keyDown(keyChar) function
 
     // ecs
-    ECSManager world = new ECSManager(); // full name because im really smart and named two managers which can lead to ambiguity no one wants that
-    renderSystem renderSystem = new renderSystem();
-    colliderSystem colliderSystem = new colliderSystem();
-    physicsSystem physicsSystem = new physicsSystem();
+    ECSManager world = new ECSManager();
+    colliderSystem colliderSystem = new colliderSystem(); // reference collider system for collision methods, nothing similar exists with other systems so just create new ones below
+
+    audio audio = new audio();
 
     entity plane = new entity(0);
     entity square = new entity(1, "square");
 
     int speed = 10;
-    audio player = new audio();
 
     @Override
     public void init(){
@@ -43,9 +42,9 @@ public class launch extends scene{
         world.addEntity(square);
 
         // ecs
-        world.addSystem(renderSystem);
+        world.addSystem(new renderSystem());
         world.addSystem(colliderSystem);
-        world.addSystem(physicsSystem);
+        world.addSystem(new physicsSystem());
 
         world.init();
     }
@@ -72,14 +71,17 @@ public class launch extends scene{
             t.r+=Math.PI/8;
         }
         if(keys[88]){ // alternative to keyDown, initialize keys above
-            entity bullet = new entity(world.entities.size(), "bullet");
+            audio.setClip("app/resources/shot.wav");
+            audio.playClip();
+            // instantiate new entity into scene
+            entity bullet = new entity(world.entities.size(), "bullet"); 
             transformComponent pt = plane.getComponent(transformComponent.class);
             bullet.addComponent(new transformComponent((int)pt.x, (int)pt.y));
-            bullet.addComponent(new renderComponent("app/resources/plane.png"));
+            bullet.addComponent(new renderComponent("app/resources/bullet.png"));
             bullet.addComponent(new colliderComponent(5, 5, 15, 15));
-            player.playSound("app/resources/shot.wav");
             float vx = (float)Math.cos(pt.r - Math.PI/2) * 10;
             float vy = (float)Math.sin(pt.r - Math.PI/2) * 10;
+            bullet.getComponent(transformComponent.class).r = (float)(pt.r); // rotation so rendering can be accurate
 
             bullet.addComponent(new physicsComponent(new float[] {vx,vy}, 1, 1, 10));
             world.addEntity(bullet);
@@ -93,7 +95,9 @@ public class launch extends scene{
 
         if(colliderSystem.AABBisColliding(square.tag, "bullet", world)){
             world.removeEntity(square);
+            
         }
+        gameManager.writeToLog(Boolean.toString(colliderSystem.AABBisColliding(square.getTag(), "bullet",world)));
 
         if(world.getTaggedEntities("bullet") != null && world.getTaggedEntities("bullet").size() > 0){
             for(entity e : world.getTaggedEntities("bullet")){

@@ -41,13 +41,9 @@ public class renderSystem implements system{
                 try{
                     BufferedImage img = ImageIO.read(new File(r.path));
 
-                    if(d!=0){
-                        g2d.rotate(d, x+w/2, y+h/2);
-                        g2d.drawImage(img, x, y, null);
-                        g2d.rotate(-d, x+w/2, y+h/2);
-                    }else{
-                        g2d.drawImage(img, x, y, null); 
-                    }
+                    g2d.rotate(d, x+w/2, y+h/2);
+                    g2d.drawImage(img, x, y, null);
+                    g2d.rotate(-d, x+w/2, y+h/2);
                     
                 }catch(IOException err){
                     err.getStackTrace();
