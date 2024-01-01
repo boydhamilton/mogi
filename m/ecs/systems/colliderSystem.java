@@ -109,6 +109,44 @@ public class colliderSystem implements system{
         return false;
     }
 
+    public boolean AABBisColliding(entity entityA, String tag, ECSManager manager){
+        ArrayList<entity> entitiesTagged = manager.getTaggedEntities(tag);
+
+        transformComponent at = entityA.getComponent(transformComponent.class);
+        colliderComponent ac = entityA.getComponent(colliderComponent.class);
+        ac.netPositionX = (int)at.x + ac.x;
+        ac.netPositionY = (int)at.y + ac.y;
+
+        ArrayList<Boolean> results = new ArrayList<>();
+
+        if(entitiesTagged!=null){
+            IntStream.range(0, entitiesTagged.size())
+            .parallel()
+            .forEach(i-> {
+
+                entity entityB = entitiesTagged.get(i);
+                if(entityB!=null && entityB.hasComponent(colliderComponent.class) && entityB.hasComponent(transformComponent.class)
+                    && entityA.hasComponent(colliderComponent.class) && entityA.hasComponent(transformComponent.class)){
+                    
+                    transformComponent bt = entityB.getComponent(transformComponent.class);
+                    colliderComponent bc = entityB.getComponent(colliderComponent.class);
+                    bc.netPositionX = (int)bt.x + bc.x;
+                    bc.netPositionY = (int)bt.y + bc.y;
+
+                    int ax = ac.netPositionX;
+                    int ay = ac.netPositionY;
+                    int bx = bc.netPositionX;
+                    int by = bc.netPositionY;
+
+                    if( (ax <= (bx+bc.w) && (ax+ac.w) >= bx) && (ay <= (by+bc.h) && (ay+ac.h) >= by) ){
+                        results.add(true);
+                    }
+                }
+            });
+        }
+        return results.size()>0;
+    }
+
     public boolean AABBisColliding(String tagA, String tagB, ECSManager manager){
         ArrayList<entity> entitiesA = manager.getTaggedEntities(tagA);
         ArrayList<entity> entitiesB = manager.getTaggedEntities(tagB);
@@ -161,6 +199,9 @@ public class colliderSystem implements system{
     }
 
 
+
+
+    // UNUSED
     // colliders no longer support rotation, keeping these methods on the off chance i implement in future. short explanation in notes.md
     public boolean linearIntersection(transformComponent at, transformComponent bt, colliderComponent ac, colliderComponent bc){
 

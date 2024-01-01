@@ -93,7 +93,7 @@ public class launch extends scene{
             gameManager.loadScene(new examplescene2());
         }
 
-        if(colliderSystem.AABBisColliding(square.tag, "bullet", world)){
+        if(colliderSystem.AABBisColliding(square, "bullet", world)){
             world.removeEntity(square);
             
         }
