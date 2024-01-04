@@ -2,23 +2,107 @@ package app;
 
 import java.awt.Graphics;
 
-import m.engine.scene;
+import m.ecs.*;
+import m.ecs.components.*;
+import m.ecs.systems.*;
+import m.engine.*;
+import m.exec.*;
 
 
 public class examplescene2 extends scene{
 
+    entity plane = new app.objects.plane(0, "plane"); // object oriented woohoo
+    int speed = 10;
+    entity[] enemy_planes = new entity[]{
+        new app.objects.plane(1, "bad"),
+        new app.objects.plane(2, "bad"),
+        new app.objects.plane(3, "bad")};
+
+    ECSManager ECSManager = new ECSManager();
+    colliderSystem colliderSystem = new colliderSystem();
+    renderSystem renderSystem = new renderSystem();
+    audio audio = new audio();
+    
     @Override
     public void init(){
-        System.out.println("hello from examplescene2");
+        ECSManager.addEntity(plane);
+
+        for(entity e : enemy_planes){
+            ECSManager.addEntity(e);
+            e.getComponent(transformComponent.class).x = (int)Math.random();
+        }
+        
+        ECSManager.addSystem(colliderSystem);
+        ECSManager.addSystem(renderSystem);
+        ECSManager.addSystem(new physicsSystem());
+
+        
+        
+        ECSManager.init();
     }
 
     @Override
     public void update(){
-        return;
+        transformComponent t = plane.getComponent(transformComponent.class);
+
+        if(scene.keyDown('w')){
+            t.y-=speed;
+        }else if(scene.keyDown('s')){
+            t.y+=speed;
+        }
+        if(scene.keyDown('a')){
+            t.x-=speed;
+        }else if(scene.keyDown('d')){
+            t.x+=speed;
+        }
+        if(scene.keyDown('q')){
+            t.r-=Math.PI/8;
+        }else if(scene.keyDown('e')){
+            t.r+=Math.PI/8;
+        }
+        if(keys[88]){ // alternative to keyDown, initialize keys above
+            audio.setClip("app/resources/shot.wav");
+            audio.playClip();
+            // instantiate new entity into scene
+            entity bullet = new entity(ECSManager.entities.size(), "bullet"); 
+            transformComponent pt = plane.getComponent(transformComponent.class);
+            bullet.addComponent(new transformComponent((int)pt.x, (int)pt.y));
+            bullet.addComponent(new renderComponent("app/resources/bullet.png"));
+            bullet.addComponent(new colliderComponent(5, 5, 15, 15));
+            float vx = (float)Math.cos(pt.r - Math.PI/2) * 10;
+            float vy = (float)Math.sin(pt.r - Math.PI/2) * 10;
+            bullet.getComponent(transformComponent.class).r = (float)(pt.r); // rotation so rendering can be accurate
+
+            bullet.addComponent(new physicsComponent(new float[] {vx,vy}, 1, 1, 10));
+            ECSManager.addEntity(bullet);
+        }
+
+        if(scene.keyDown('m')){
+            gameManager.loadScene(new launch());
+        }
+        if(scene.keyDown('n')){
+            gameManager.loadScene(new examplescene2());
+        }
+        if(colliderSystem.AABBisColliding(enemy_plane, "bullet", ECSManager)){
+            ECSManager.removeEntity(enemy_plane);
+            
+        }
+        gameManager.writeToLog(Boolean.toString(colliderSystem.AABBisColliding(enemy_plane.getTag(), "bullet",ECSManager)));
+
+        if(ECSManager.getTaggedEntities("bullet") != null && ECSManager.getTaggedEntities("bullet").size() > 0){
+            for(entity e : ECSManager.getTaggedEntities("bullet")){
+                transformComponent et = e.getComponent(transformComponent.class);
+                if(et.x < 0 || et.x > 400 || et.y < 0 || et.y > 400){
+                    ECSManager.entities.remove(e);
+                }
+            }
+        }
+
+        ECSManager.update();
     }
 
     @Override
     public void draw(Graphics g){
-        return;
+        ECSManager.draw(g);
     }
 }

@@ -17,7 +17,7 @@ class Surface extends JPanel {
 
     public Surface(){
         gameManager.deleteLog();
-        currentScene = new app.launch(); // need to call main.java from parent
+        currentScene = new app.launch(); // enforced folder structure
         currentScene.init();
         repaint();
         gameManager.createLog();

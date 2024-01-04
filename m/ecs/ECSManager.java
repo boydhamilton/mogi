@@ -30,7 +30,7 @@ public class ECSManager { // expanded past ecs manager and also handles scene ma
     public entity getEntity(int id){
         return entities.get(id);
     }
-    public ArrayList<entity> getTaggedEntities(String tag){ // whole point of tags is there can be more than one lols
+    public ArrayList<entity> getTaggedEntities(String tag){
         ArrayList<entity> list = new ArrayList<>();
         for(entity e : entities){
             if(e.getTag()==tag){
