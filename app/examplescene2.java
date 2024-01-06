@@ -1,6 +1,9 @@
 package app;
 
 import java.awt.Graphics;
+import java.util.stream.IntStream;
+
+import javax.swing.text.html.parser.Entity;
 
 import m.ecs.*;
 import m.ecs.components.*;
@@ -27,9 +30,10 @@ public class examplescene2 extends scene{
     public void init(){
         ECSManager.addEntity(plane);
 
-        for(entity e : enemy_planes){
+        for(int i=0; i<enemy_planes.length; i++){
+            entity e = enemy_planes[i];
             ECSManager.addEntity(e);
-            e.getComponent(transformComponent.class).x = (int)Math.random();
+            e.getComponent(transformComponent.class).x = 100*i;
         }
         
         ECSManager.addSystem(colliderSystem);
@@ -83,11 +87,22 @@ public class examplescene2 extends scene{
         if(scene.keyDown('n')){
             gameManager.loadScene(new examplescene2());
         }
-        if(colliderSystem.AABBisColliding(enemy_plane, "bullet", ECSManager)){
-            ECSManager.removeEntity(enemy_plane);
-            
+
+        // lowk should be a way to return the mentioned entity in tagged functions cause now i have to like iterate
+        // cause this is not it
+        // works but gay as shit
+        if(ECSManager.getTaggedEntities("bad")!=null){
+            IntStream.range(0,ECSManager.getTaggedEntities("bad").size())
+            .parallel()
+            .forEach(i -> { 
+                entity e = ECSManager.getTaggedEntities("bad").get(i);
+                if(colliderSystem.AABBisColliding(e, "bullet", ECSManager)){
+                    ECSManager.removeEntity(e);
+                }
+                // gameManager.writeToLog(Boolean.toString(colliderSystem.AABBisColliding(e.getTag(), "bullet",ECSManager)));
+            });
         }
-        gameManager.writeToLog(Boolean.toString(colliderSystem.AABBisColliding(enemy_plane.getTag(), "bullet",ECSManager)));
+        
 
         if(ECSManager.getTaggedEntities("bullet") != null && ECSManager.getTaggedEntities("bullet").size() > 0){
             for(entity e : ECSManager.getTaggedEntities("bullet")){
