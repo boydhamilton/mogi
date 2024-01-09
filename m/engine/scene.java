@@ -23,7 +23,7 @@ public class scene extends JFrame implements KeyListener{
         return;
     }
 
-    public void update(){
+    public void update(int dt){
         return;
     }
 

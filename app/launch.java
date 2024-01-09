@@ -51,7 +51,7 @@ public class launch extends scene{
 
     
     @Override
-    public void update(){
+    public void update(int dt){
 
         transformComponent t = plane.getComponent(transformComponent.class);
 
@@ -95,7 +95,7 @@ public class launch extends scene{
         if(scene.keyDown('p')){
             gameManager.loadScene(new examplescene3());
         }
-
+        
         if(colliderSystem.AABBisColliding(square, "bullet", world)){
             world.removeEntity(square);
             

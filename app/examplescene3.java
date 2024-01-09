@@ -49,7 +49,7 @@ public class examplescene3 extends scene{
     }
 
     @Override
-    public void update(){
+    public void update(int dt){
         
         transformComponent playerTransformComponent = player.getComponent(transformComponent.class);
         if(scene.keyDown('w') && !depressed){

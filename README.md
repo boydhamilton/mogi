@@ -12,15 +12,33 @@ There is an enforced file structure, any application you make must go in the app
 Once you have created launch.java, create the scene object.
 
 ```java
+package app;
+
+import java.awt.Graphics;
+
+import m.exec.*;
+import m.engine.*;
+import m.ecs.*;
+import m.ecs.components.*;
+import m.ecs.systems.*;
+
 public class launch extends scene{
+
+    ECSManager world = new ECSManager();
+
     @Override
     public void init(){
+        world.init();
     }
+
     @Override
     public void update(){
+        world.update();
     }
+
     @Override
     public void draw(Graphics g){
+        world.draw(g);
     }
 }
 ```

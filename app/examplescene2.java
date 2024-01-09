@@ -44,7 +44,7 @@ public class examplescene2 extends scene{
     }
 
     @Override
-    public void update(){
+    public void update(int dt){
         transformComponent t = plane.getComponent(transformComponent.class);
 
         if(scene.keyDown('w')){

@@ -12,6 +12,7 @@ public class gameManager {
     public static int windowWidth = 500;
     public static int windowHeight = 500;
     public static String windowTitle = "mogi Project Window";
+    public static boolean windowIsResizeable = false;
 
     public static final boolean DEBUG = true;
 
@@ -22,12 +23,20 @@ public class gameManager {
     }
 
     // window
+    // setter
     public static void setWindowDimensions(int w, int h){
         gameManager.windowWidth = w;
         gameManager.windowHeight = h;
     }
     public static void setWindowTitle(String windowTitle){
         gameManager.windowTitle = windowTitle;
+    }
+    public static void setWindowToBeReizeable(boolean isResizeable){
+        windowIsResizeable = isResizeable;
+    }
+    // getter
+    public static double[] getWindowDimensions(){
+        return run.frameSize;
     }
     
 

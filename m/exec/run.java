@@ -37,9 +37,9 @@ class Surface extends JPanel {
 
 
 public class run{
-    public static final int deltaTime = 34; //ms
+    public static int deltaTime = 34; //ms
+    public static double[] frameSize=new double[1];
     public static Surface surface = new Surface();
-
 
     public static void main(String[] args){
         SwingUtilities.invokeLater(() -> {
@@ -48,16 +48,21 @@ public class run{
             // set frame
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.add(surface);
+            frame.setResizable(gameManager.windowIsResizeable);
             frame.setSize(gameManager.windowWidth, gameManager.windowHeight);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.addKeyListener(surface.currentScene);
 
+            // get frame values
+            frameSize[0]=frame.getSize().getWidth();
+            frameSize[1]=frame.getSize().getHeight();
+
             // update scene
             Timer timer = new Timer(deltaTime, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e){
-                    surface.currentScene.update();
+                    surface.currentScene.update(deltaTime);
                     surface.repaint();
                 }
             });
