@@ -3,8 +3,6 @@ package app;
 import java.awt.Graphics;
 import java.util.stream.IntStream;
 
-import javax.swing.text.html.parser.Entity;
-
 import m.ecs.*;
 import m.ecs.components.*;
 import m.ecs.systems.*;

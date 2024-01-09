@@ -99,7 +99,8 @@ public class colliderSystem implements system{
         int by = bc.netPositionY;
 
         if( (ax <= (bx+bc.w) && (ax+ac.w) >= bx) && (ay <= (by+bc.h) && (ay+ac.h) >= by) ){
-            System.out.println(Integer.toString(a.id) + " collided with " + Integer.toString(b.id) );
+            m.exec.gameManager.writeToLog(Integer.toString(a.id) + " collided with " + Integer.toString(b.id) );
+
             ac.isColliding = true;
             bc.isColliding = true;
 

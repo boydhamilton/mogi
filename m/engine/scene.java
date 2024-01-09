@@ -31,6 +31,15 @@ public class scene extends JFrame implements KeyListener{
         return;
     }
 
+    public static boolean keyDown(){ // if any key is down
+        for(boolean k : keys){
+            if(k){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean keyDown(int keyCode){
         return keys[keyCode];
     }

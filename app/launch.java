@@ -92,6 +92,9 @@ public class launch extends scene{
         if(scene.keyDown('n')){
             gameManager.loadScene(new examplescene2());
         }
+        if(scene.keyDown('p')){
+            gameManager.loadScene(new examplescene3());
+        }
 
         if(colliderSystem.AABBisColliding(square, "bullet", world)){
             world.removeEntity(square);
