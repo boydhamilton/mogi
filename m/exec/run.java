@@ -38,7 +38,7 @@ class Surface extends JPanel {
 
 public class run{
     public static int deltaTime = 34; //ms
-    public static double[] frameSize=new double[1];
+    public static double[] frameSize=new double[2];
     public static Surface surface = new Surface();
 
     public static void main(String[] args){
