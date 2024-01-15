@@ -32,7 +32,7 @@ public class launch extends scene{
     }
 
     @Override
-    public void update(){
+    public void update(int dt){
         world.update();
     }
 
